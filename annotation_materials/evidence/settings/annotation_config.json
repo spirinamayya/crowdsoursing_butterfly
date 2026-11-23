@@ -1,0 +1,2272 @@
+{
+  "projects": {
+    "bbox": {
+      "public_name": "Выделите взрослых бабочек",
+      "public_description": "Выделите взрослых бабочек на фотографии.",
+      "public_instructions_price": 0.0,
+      "task_spec": {
+        "input_spec": {
+          "image": {
+            "type": "url",
+            "hidden": false,
+            "required": true
+          },
+          "image_id": {
+            "type": "string",
+            "hidden": true,
+            "required": true
+          },
+          "initial_boxes": {
+            "type": "json",
+            "hidden": false,
+            "required": true
+          }
+        },
+        "output_spec": {
+          "result": {
+            "type": "json",
+            "hidden": false,
+            "required": false
+          },
+          "status": {
+            "type": "string",
+            "hidden": false,
+            "required": true
+          },
+          "preannotation_initialized": {
+            "type": "boolean",
+            "hidden": false,
+            "required": false
+          }
+        },
+        "view_spec": {
+          "type": "classic",
+          "assets": {
+            "style_urls": [],
+            "script_urls": [
+              "$TOLOKA_ASSETS/js/toloka-handlebars-templates.js",
+              "$TOLOKA_ASSETS/js/image-annotation.js"
+            ]
+          },
+          "markup": "<p>Выделите каждую взрослую бабочку отдельным прямоугольником. Чтобы удалить выделенную рамку, нажмите D в английской раскладке.</p>\n{{field type=\"image-annotation\" name=\"result\" src=image}}\n<p>Результат просмотра</p>\n{{field type=\"radio\" name=\"status\" value=\"boxes\" label=\"Бабочки выделены рамками\"}}\n{{field type=\"radio\" name=\"status\" value=\"empty\" label=\"На фотографии нет взрослых бабочек\"}}\n{{field type=\"radio\" name=\"status\" value=\"load_error\" label=\"Фотография не загрузилась\"}}\n",
+          "script": "exports.Task = function (options) {\n    TolokaHandlebarsTask.call(this, options);\n    var boxes = this.getTask().input_values.initial_boxes;\n    if (!Array.isArray(boxes)) {\n        throw new Error(\"Вход initial_boxes должен содержать массив рамок и иметь hidden: false.\");\n    }\n    var output = this.getSolution().output_values;\n    if (!output.preannotation_initialized) {\n        if (!Array.isArray(output.result) || output.result.length === 0) {\n            this.setSolutionOutputValue(\"result\", JSON.parse(JSON.stringify(boxes)));\n        }\n        this.setSolutionOutputValue(\"preannotation_initialized\", true);\n    }\n};\nexports.Task.prototype = Object.create(TolokaHandlebarsTask.prototype);\nexports.Task.prototype.constructor = exports.Task;\nexports.Task.prototype.onRender = function () {\n    var task = this;\n    this.getField(\"result\").getEditor().on(\"shapes:update\", function (shapes) {\n        if (shapes.length === 0) {\n            task.setSolutionOutputValue(\"result\", []);\n        }\n    });\n};\n\nexports.Task.prototype.validate = function (solution) {\n    solution = solution || this.getSolution();\n    var base = TolokaHandlebarsTask.prototype.validate.call(this, solution);\n    if (base) return base;\n    var output = solution.output_values;\n    var boxes = output.result || [];\n    var message;\n    if (output.status === \"boxes\" && !boxes.length) {\n        message = \"Выделите бабочку рамкой или измените результат просмотра.\";\n    } else if (output.status !== \"boxes\" && boxes.length) {\n        message = \"Удалите рамки или выберите «Бабочки выделены рамками».\";\n    }\n    if (message) return {task_id: this.getTask().id, errors: {status: {code: \"INVALID\", message: message}}};\n    return null;\n};\n",
+          "styles": ".image-annotation-editor__shape-polygon { display: none; }\n.image-annotation-editor__shape-rectangle { display: inline-block; }\n",
+          "settings": {
+            "showSkip": true,
+            "showTimer": true,
+            "showTitle": true,
+            "showFinish": true,
+            "showReward": true,
+            "showSubmit": true,
+            "permissions": [],
+            "showMessage": true,
+            "showFullscreen": true,
+            "showInstructions": true
+          }
+        }
+      },
+      "assignments_issuing_type": "AUTOMATED",
+      "assignments_automerge_enabled": false,
+      "service_type": "UNDEFINED",
+      "project_types": [],
+      "content_types": [],
+      "status": "ACTIVE",
+      "created": "2026-11-18T16:50:08.476",
+      "instructions_file": "for_yandex_tasks/bbox/instructions.html"
+    },
+    "review": {
+      "public_name": "Проверьте разметку бабочек",
+      "public_description": "Проверьте разметку бабочек на фотографии.",
+      "public_instructions_price": 0.0,
+      "task_spec": {
+        "input_spec": {
+          "boxes": {
+            "type": "json",
+            "hidden": false,
+            "required": true
+          },
+          "image": {
+            "type": "url",
+            "hidden": false,
+            "required": true
+          },
+          "candidate_id": {
+            "type": "string",
+            "hidden": true,
+            "required": true
+          }
+        },
+        "output_spec": {
+          "status": {
+            "type": "string",
+            "hidden": false,
+            "required": true
+          },
+          "accurate": {
+            "type": "string",
+            "hidden": false,
+            "required": false
+          },
+          "complete": {
+            "type": "string",
+            "hidden": false,
+            "required": false
+          },
+          "no_extra": {
+            "type": "string",
+            "hidden": false,
+            "required": false
+          }
+        },
+        "view_spec": {
+          "type": "classic",
+          "assets": {
+            "style_urls": [],
+            "script_urls": [
+              "$TOLOKA_ASSETS/js/toloka-handlebars-templates.js"
+            ]
+          },
+          "markup": "<p>Проверьте всю картинку и все рамки по инструкции. Здесь рамки менять не нужно.</p>\n<div class=\"check-tools\">\n  <label>Масштаб <input class=\"zoom\" type=\"range\" min=\"100\" max=\"300\" step=\"25\" value=\"100\"></label>\n  <button class=\"toggle-boxes\" type=\"button\">Скрыть / показать рамки</button>\n</div>\n<div class=\"check-viewport\"><div class=\"check-stage\">\n  <img src=\"{{image}}\" alt=\"Изображение для проверки\">\n  <svg class=\"boxes\" viewBox=\"0 0 1000 1000\" preserveAspectRatio=\"none\"></svg>\n</div></div>\n<p>Укажите, открылась ли фотография.</p>\n{{field type=\"radio\" name=\"status\" value=\"reviewed\" label=\"Фотография открылась\"}}\n{{field type=\"radio\" name=\"status\" value=\"load_error\" label=\"Фотография не загрузилась\"}}\n<p><b>Все взрослые бабочки выделены?</b></p>\n{{field type=\"radio\" name=\"complete\" value=\"yes\" label=\"Да\"}}\n{{field type=\"radio\" name=\"complete\" value=\"no\" label=\"Нет, есть пропуски\"}}\n<p><b>Нет лишних рамок и повторных выделений?</b></p>\n{{field type=\"radio\" name=\"no_extra\" value=\"yes\" label=\"Да\"}}\n{{field type=\"radio\" name=\"no_extra\" value=\"no\" label=\"Нет, есть лишние\"}}\n<p><b>Границы всех нарисованных рамок соответствуют инструкции?</b></p>\n{{field type=\"radio\" name=\"accurate\" value=\"yes\" label=\"Да\"}}\n{{field type=\"radio\" name=\"accurate\" value=\"no\" label=\"Нет, нужно исправить границы\"}}\n",
+          "script": "exports.Task = function (options) {\n    TolokaHandlebarsTask.call(this, options);\n};\nexports.Task.prototype = Object.create(TolokaHandlebarsTask.prototype);\nexports.Task.prototype.constructor = exports.Task;\nexports.Task.prototype.onRender = function () {\n    var root = this.getDOMElement();\n    var svg = root.querySelector(\".boxes\");\n    svg.replaceChildren();\n    this.getTask().input_values.boxes.forEach(function (box) {\n        var rect = document.createElementNS(\"http://www.w3.org/2000/svg\", \"rect\");\n        rect.setAttribute(\"x\", box[0] * 1000);\n        rect.setAttribute(\"y\", box[1] * 1000);\n        rect.setAttribute(\"width\", (box[2] - box[0]) * 1000);\n        rect.setAttribute(\"height\", (box[3] - box[1]) * 1000);\n        svg.appendChild(rect);\n    });\n    root.querySelector(\".zoom\").oninput = function (event) {\n        root.querySelector(\".check-stage\").style.width = event.target.value + \"%\";\n    };\n    root.querySelector(\".toggle-boxes\").onclick = function () {\n        svg.style.visibility = svg.style.visibility === \"hidden\" ? \"visible\" : \"hidden\";\n    };\n};\n\nexports.Task.prototype.validate = function (solution) {\n    solution = solution || this.getSolution();\n    var base = TolokaHandlebarsTask.prototype.validate.call(this, solution);\n    if (base) return base;\n    var output = solution.output_values;\n    if (output.status === \"reviewed\") {\n        var errors = {};\n        [\"complete\", \"no_extra\", \"accurate\"].forEach(function (field) {\n            if (!output[field]) errors[field] = {code: \"REQUIRED\", message: \"Выберите ответ.\"};\n        });\n        if (Object.keys(errors).length) return {task_id: this.getTask().id, errors: errors};\n    }\n    return null;\n};\n",
+          "styles": ".check-tools { display: flex; gap: 24px; margin-bottom: 12px; }\n.check-viewport { overflow: auto; max-height: 75vh; }\n.check-stage { position: relative; width: 100%; }\n.check-stage img { display: block; width: 100%; }\n.check-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }\n.check-stage rect { fill: none; stroke: #ffb000; stroke-width: 2; vector-effect: non-scaling-stroke; }\n",
+          "settings": {
+            "showSkip": true,
+            "showTimer": true,
+            "showTitle": true,
+            "showFinish": true,
+            "showReward": true,
+            "showSubmit": true,
+            "permissions": [],
+            "showMessage": true,
+            "showFullscreen": true,
+            "showInstructions": true
+          }
+        }
+      },
+      "assignments_issuing_type": "AUTOMATED",
+      "assignments_automerge_enabled": false,
+      "service_type": "UNDEFINED",
+      "project_types": [],
+      "content_types": [],
+      "status": "ACTIVE",
+      "created": "2026-11-18T16:56:20.030",
+      "instructions_file": "for_yandex_tasks/review/instructions.html"
+    }
+  },
+  "skills": {
+    "training_review": {
+      "name": "training_review",
+      "hidden": true,
+      "deprecated": false,
+      "type": "TRAINING",
+      "training": true,
+      "created": "2026-11-18T16:56:20.335",
+      "global": false
+    },
+    "review_exam": {
+      "name": "Бабочки — review — butterflies",
+      "public_name": {
+        "EN": "Бабочки — review — butterflies"
+      },
+      "hidden": true,
+      "deprecated": false,
+      "type": "CUSTOM",
+      "created": "2026-11-18T16:56:21.860",
+      "global": false
+    },
+    "training_bbox": {
+      "name": "training_bbox",
+      "hidden": true,
+      "deprecated": false,
+      "type": "TRAINING",
+      "training": true,
+      "created": "2026-11-18T17:06:20.150",
+      "global": false
+    },
+    "review_accuracy": {
+      "name": "Бабочки — review — точность на ханипотах",
+      "public_name": {
+        "EN": "Бабочки — review — точность на ханипотах"
+      },
+      "hidden": true,
+      "deprecated": false,
+      "type": "CUSTOM",
+      "created": "2026-11-18T18:23:02.862",
+      "global": false
+    }
+  },
+  "trainings": {
+    "training_bbox": {
+      "project_id": "bbox",
+      "private_name": "butterfly-training-bbox",
+      "inherited_instructions": false,
+      "may_contain_adult_content": false,
+      "may_contain_nda": false,
+      "assignment_max_duration_seconds": 1800,
+      "mix_tasks_in_creation_order": true,
+      "shuffle_tasks_in_task_suite": false,
+      "training_tasks_in_task_suite_count": 2,
+      "task_suites_required_to_pass": 1,
+      "price": 0.0,
+      "dependencies": [],
+      "cascade": false,
+      "training_type": "TRAINING",
+      "display_as_regular": false,
+      "status": "OPEN",
+      "created": "2026-11-18T17:06:20.160",
+      "last_started": "2026-11-18T17:34:39.296",
+      "skill_id": "training_bbox",
+      "instructions_file": "for_yandex_tasks/bbox/training_bbox_instructions.html"
+    },
+    "training_review": {
+      "project_id": "review",
+      "private_name": "butterfly-training-review",
+      "inherited_instructions": true,
+      "may_contain_adult_content": false,
+      "may_contain_nda": false,
+      "assignment_max_duration_seconds": 1800,
+      "mix_tasks_in_creation_order": true,
+      "shuffle_tasks_in_task_suite": false,
+      "training_tasks_in_task_suite_count": 6,
+      "task_suites_required_to_pass": 1,
+      "price": 0.0,
+      "dependencies": [],
+      "cascade": false,
+      "training_type": "TRAINING",
+      "display_as_regular": false,
+      "status": "OPEN",
+      "created": "2026-11-18T16:56:20.344",
+      "last_started": "2026-11-18T18:14:52.170",
+      "skill_id": "training_review"
+    }
+  },
+  "pools": {
+    "pilot_bbox": {
+      "project_id": "bbox",
+      "private_name": "butterfly-pilot-bbox",
+      "may_contain_adult_content": false,
+      "may_contain_nda": false,
+      "will_expire": "2026-12-18T16:50:06",
+      "auto_close_after_complete_delay_seconds": 0,
+      "reward_per_assignment": 1.0,
+      "metadata": {},
+      "assignment_max_duration_seconds": 1800,
+      "auto_accept_solutions": true,
+      "auto_accept_period_day": 21,
+      "assignments_issuing_config": {
+        "issue_task_suites_in_creation_order": false
+      },
+      "filter": {
+        "and": [
+          {
+            "or": [
+              {
+                "category": "computed",
+                "key": "user_agent_type",
+                "operator": "EQ",
+                "value": "BROWSER"
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "category": "profile",
+                "key": "languages",
+                "operator": "IN",
+                "value": "RU"
+              }
+            ]
+          }
+        ]
+      },
+      "quality_control": {
+        "training_requirement": {
+          "training_passing_skill_value": 0,
+          "training_pool_id": "training_bbox"
+        }
+      },
+      "mixer_config": {
+        "real_tasks_count": 1,
+        "golden_tasks_count": 0,
+        "training_tasks_count": 0,
+        "force_last_assignment": true
+      },
+      "defaults": {
+        "default_overlap_for_new_task_suites": 1
+      },
+      "priority": 0,
+      "eligible_audience": "ANY",
+      "type": "REGULAR",
+      "status": "CLOSED",
+      "last_close_reason": "COMPLETED",
+      "created": "2026-11-18T16:50:09.074",
+      "last_started": "2026-11-18T17:42:50.847",
+      "last_stopped": "2026-11-18T17:46:00.134",
+      "speed_quality_balance": {
+        "percent": 100,
+        "type": "TOP_PERCENTAGE_BY_QUALITY"
+      }
+    },
+    "main_bbox": {
+      "project_id": "bbox",
+      "private_name": "butterfly-main-reviewed-bbox",
+      "may_contain_adult_content": false,
+      "may_contain_nda": false,
+      "will_expire": "2026-12-18T23:08:22",
+      "auto_close_after_complete_delay_seconds": 0,
+      "reward_per_assignment": 0.8,
+      "metadata": {},
+      "assignment_max_duration_seconds": 1800,
+      "auto_accept_solutions": false,
+      "auto_accept_period_day": 14,
+      "assignments_issuing_config": {
+        "issue_task_suites_in_creation_order": false
+      },
+      "filter": {
+        "and": [
+          {
+            "or": [
+              {
+                "category": "computed",
+                "key": "user_agent_type",
+                "operator": "EQ",
+                "value": "BROWSER"
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "category": "profile",
+                "key": "languages",
+                "operator": "IN",
+                "value": "RU"
+              }
+            ]
+          }
+        ]
+      },
+      "quality_control": {
+        "training_requirement": {
+          "training_passing_skill_value": 0,
+          "training_pool_id": "training_bbox"
+        }
+      },
+      "mixer_config": {
+        "real_tasks_count": 1,
+        "golden_tasks_count": 0,
+        "training_tasks_count": 0,
+        "force_last_assignment": true
+      },
+      "defaults": {
+        "default_overlap_for_new_task_suites": 1
+      },
+      "priority": 0,
+      "eligible_audience": "ANY",
+      "type": "REGULAR",
+      "status": "CLOSED",
+      "last_close_reason": "COMPLETED",
+      "created": "2026-11-18T23:08:25.247",
+      "last_started": "2026-11-18T23:51:28.184",
+      "last_stopped": "2026-11-19T00:06:30.051",
+      "speed_quality_balance": {
+        "percent": 100,
+        "type": "TOP_PERCENTAGE_BY_QUALITY"
+      }
+    },
+    "main_retry": {
+      "project_id": "bbox",
+      "private_name": "butterfly-main-reviewed-retry",
+      "may_contain_adult_content": false,
+      "may_contain_nda": false,
+      "will_expire": "2026-12-18T23:08:31",
+      "auto_close_after_complete_delay_seconds": 0,
+      "reward_per_assignment": 0.7,
+      "metadata": {},
+      "assignment_max_duration_seconds": 1800,
+      "auto_accept_solutions": false,
+      "auto_accept_period_day": 7,
+      "assignments_issuing_config": {
+        "issue_task_suites_in_creation_order": false
+      },
+      "filter": {
+        "and": [
+          {
+            "or": [
+              {
+                "category": "computed",
+                "key": "user_agent_type",
+                "operator": "EQ",
+                "value": "BROWSER"
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "category": "profile",
+                "key": "languages",
+                "operator": "IN",
+                "value": "RU"
+              }
+            ]
+          }
+        ]
+      },
+      "quality_control": {
+        "training_requirement": {
+          "training_passing_skill_value": 0,
+          "training_pool_id": "training_bbox"
+        }
+      },
+      "mixer_config": {
+        "real_tasks_count": 1,
+        "golden_tasks_count": 0,
+        "training_tasks_count": 0,
+        "force_last_assignment": true
+      },
+      "defaults": {
+        "default_overlap_for_new_task_suites": 1
+      },
+      "priority": 0,
+      "eligible_audience": "ANY",
+      "type": "REGULAR",
+      "status": "CLOSED",
+      "last_close_reason": "COMPLETED",
+      "created": "2026-11-18T23:08:33.431",
+      "last_started": "2026-11-19T01:58:43.861",
+      "last_stopped": "2026-11-19T02:00:00.278",
+      "speed_quality_balance": {
+        "percent": 100,
+        "type": "TOP_PERCENTAGE_BY_QUALITY"
+      }
+    },
+    "main_third": {
+      "project_id": "bbox",
+      "private_name": "butterfly-main-reviewed-third",
+      "may_contain_adult_content": true,
+      "may_contain_nda": false,
+      "will_expire": "2026-12-19T02:45:23",
+      "auto_close_after_complete_delay_seconds": 0,
+      "reward_per_assignment": 0.7,
+      "metadata": {},
+      "assignment_max_duration_seconds": 1800,
+      "auto_accept_solutions": false,
+      "auto_accept_period_day": 7,
+      "assignments_issuing_config": {
+        "issue_task_suites_in_creation_order": false
+      },
+      "filter": {
+        "and": [
+          {
+            "or": [
+              {
+                "category": "computed",
+                "key": "user_agent_type",
+                "operator": "EQ",
+                "value": "BROWSER"
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "category": "profile",
+                "key": "languages",
+                "operator": "IN",
+                "value": "RU"
+              }
+            ]
+          }
+        ]
+      },
+      "quality_control": {
+        "training_requirement": {
+          "training_passing_skill_value": 0,
+          "training_pool_id": "training_bbox"
+        }
+      },
+      "mixer_config": {
+        "real_tasks_count": 1,
+        "golden_tasks_count": 0,
+        "training_tasks_count": 0,
+        "force_last_assignment": true
+      },
+      "defaults": {
+        "default_overlap_for_new_task_suites": 1
+      },
+      "priority": 0,
+      "eligible_audience": "ANY",
+      "type": "REGULAR",
+      "status": "CLOSED",
+      "last_close_reason": "COMPLETED",
+      "created": "2026-11-19T02:45:25.963",
+      "last_started": "2026-11-19T04:07:57.956",
+      "last_stopped": "2026-11-19T04:09:00.033",
+      "speed_quality_balance": {
+        "percent": 100,
+        "type": "TOP_PERCENTAGE_BY_QUALITY"
+      }
+    },
+    "pilot_review": {
+      "project_id": "review",
+      "private_name": "butterfly-pilot-review",
+      "may_contain_adult_content": false,
+      "may_contain_nda": false,
+      "will_expire": "2026-12-18T16:56:19",
+      "auto_close_after_complete_delay_seconds": 0,
+      "reward_per_assignment": 2.0,
+      "metadata": {},
+      "assignment_max_duration_seconds": 1800,
+      "auto_accept_solutions": true,
+      "auto_accept_period_day": 21,
+      "assignments_issuing_config": {
+        "issue_task_suites_in_creation_order": false
+      },
+      "filter": {
+        "and": [
+          {
+            "or": [
+              {
+                "category": "computed",
+                "key": "user_agent_type",
+                "operator": "EQ",
+                "value": "BROWSER"
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "category": "skill",
+                "key": "review_exam",
+                "value": 80,
+                "operator": "GTE"
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "category": "skill",
+                "key": "review_accuracy",
+                "operator": "EQ"
+              },
+              {
+                "category": "skill",
+                "key": "review_accuracy",
+                "value": 80,
+                "operator": "GTE"
+              }
+            ]
+          }
+        ]
+      },
+      "quality_control": {
+        "training_requirement": {
+          "training_passing_skill_value": 80,
+          "training_pool_id": "training_review"
+        },
+        "configs": [
+          {
+            "collector_config": {
+              "type": "GOLDEN_SET",
+              "uuid": "collector_1",
+              "parameters": {
+                "history_size": 11
+              }
+            },
+            "rules": [
+              {
+                "conditions": [
+                  {
+                    "key": "golden_set_answers_count",
+                    "operator": "GTE",
+                    "value": 11
+                  }
+                ],
+                "action": {
+                  "type": "SET_SKILL_FROM_OUTPUT_FIELD",
+                  "parameters": {
+                    "from_field": "golden_set_correct_answers_rate",
+                    "skill_id": "review_accuracy"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "mixer_config": {
+        "real_tasks_count": 9,
+        "golden_tasks_count": 1,
+        "training_tasks_count": 0,
+        "force_last_assignment": true
+      },
+      "defaults": {
+        "default_overlap_for_new_task_suites": 3
+      },
+      "priority": 0,
+      "eligible_audience": "ANY",
+      "type": "REGULAR",
+      "status": "CLOSED",
+      "last_close_reason": "COMPLETED",
+      "created": "2026-11-18T16:56:22.137",
+      "last_started": "2026-11-18T18:33:23.636",
+      "last_stopped": "2026-11-18T18:56:30.025",
+      "speed_quality_balance": {
+        "percent": 100,
+        "type": "TOP_PERCENTAGE_BY_QUALITY"
+      }
+    },
+    "exam_review": {
+      "project_id": "review",
+      "private_name": "butterfly-exam-review",
+      "may_contain_adult_content": false,
+      "may_contain_nda": false,
+      "will_expire": "2026-12-18T16:57:16",
+      "auto_close_after_complete_delay_seconds": 0,
+      "reward_per_assignment": 0.8,
+      "metadata": {},
+      "assignment_max_duration_seconds": 1800,
+      "auto_accept_solutions": true,
+      "auto_accept_period_day": 21,
+      "assignments_issuing_config": {
+        "issue_task_suites_in_creation_order": false
+      },
+      "filter": {
+        "and": [
+          {
+            "or": [
+              {
+                "category": "computed",
+                "key": "user_agent_type",
+                "operator": "EQ",
+                "value": "BROWSER"
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "category": "profile",
+                "key": "languages",
+                "operator": "IN",
+                "value": "RU"
+              }
+            ]
+          }
+        ]
+      },
+      "quality_control": {
+        "training_requirement": {
+          "training_passing_skill_value": 80,
+          "training_pool_id": "training_review"
+        },
+        "configs": [
+          {
+            "collector_config": {
+              "type": "GOLDEN_SET",
+              "uuid": "collector_1",
+              "parameters": {
+                "history_size": 100
+              }
+            },
+            "rules": [
+              {
+                "conditions": [
+                  {
+                    "key": "golden_set_answers_count",
+                    "operator": "GTE",
+                    "value": 10
+                  }
+                ],
+                "action": {
+                  "type": "SET_SKILL_FROM_OUTPUT_FIELD",
+                  "parameters": {
+                    "from_field": "golden_set_correct_answers_rate",
+                    "skill_id": "review_exam"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "mixer_config": {
+        "real_tasks_count": 0,
+        "golden_tasks_count": 10,
+        "training_tasks_count": 0,
+        "force_last_assignment": false
+      },
+      "defaults": {
+        "default_overlap_for_new_task_suites": 33
+      },
+      "priority": 0,
+      "eligible_audience": "ANY",
+      "regular_subtype": "EXAM",
+      "type": "REGULAR",
+      "status": "CLOSED",
+      "last_close_reason": "COMPLETED",
+      "created": "2026-11-18T16:57:18.954",
+      "last_started": "2026-11-19T03:43:27.022",
+      "last_stopped": "2026-11-19T03:53:30.033",
+      "speed_quality_balance": {
+        "percent": 100,
+        "type": "TOP_PERCENTAGE_BY_QUALITY"
+      }
+    },
+    "main_review": {
+      "project_id": "review",
+      "private_name": "butterfly-main-reviewed-review",
+      "may_contain_adult_content": false,
+      "may_contain_nda": false,
+      "will_expire": "2026-12-18T23:08:29",
+      "auto_close_after_complete_delay_seconds": 0,
+      "reward_per_assignment": 0.7,
+      "metadata": {},
+      "assignment_max_duration_seconds": 1800,
+      "auto_accept_solutions": true,
+      "auto_accept_period_day": 21,
+      "assignments_issuing_config": {
+        "issue_task_suites_in_creation_order": false
+      },
+      "filter": {
+        "and": [
+          {
+            "or": [
+              {
+                "category": "computed",
+                "key": "user_agent_type",
+                "operator": "EQ",
+                "value": "BROWSER"
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "category": "skill",
+                "key": "review_exam",
+                "value": 80,
+                "operator": "GTE"
+              }
+            ]
+          },
+          {
+            "or": [
+              {
+                "category": "skill",
+                "key": "review_accuracy",
+                "operator": "EQ"
+              },
+              {
+                "category": "skill",
+                "key": "review_accuracy",
+                "value": 80,
+                "operator": "GTE"
+              }
+            ]
+          }
+        ]
+      },
+      "quality_control": {
+        "training_requirement": {
+          "training_passing_skill_value": 80,
+          "training_pool_id": "training_review"
+        },
+        "configs": [
+          {
+            "collector_config": {
+              "type": "GOLDEN_SET",
+              "uuid": "collector_1",
+              "parameters": {
+                "history_size": 100
+              }
+            },
+            "rules": [
+              {
+                "conditions": [
+                  {
+                    "key": "golden_set_answers_count",
+                    "operator": "GTE",
+                    "value": 11
+                  }
+                ],
+                "action": {
+                  "type": "SET_SKILL_FROM_OUTPUT_FIELD",
+                  "parameters": {
+                    "from_field": "golden_set_correct_answers_rate",
+                    "skill_id": "review_accuracy"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "mixer_config": {
+        "real_tasks_count": 9,
+        "golden_tasks_count": 1,
+        "training_tasks_count": 0,
+        "force_last_assignment": true
+      },
+      "defaults": {
+        "default_overlap_for_new_task_suites": 3
+      },
+      "priority": 0,
+      "eligible_audience": "ANY",
+      "type": "REGULAR",
+      "status": "CLOSED",
+      "last_close_reason": "COMPLETED",
+      "created": "2026-11-18T23:08:31.562",
+      "last_started": "2026-11-19T03:03:22.569",
+      "last_stopped": "2026-11-19T03:54:30.023",
+      "speed_quality_balance": {
+        "percent": 100,
+        "type": "TOP_PERCENTAGE_BY_QUALITY"
+      }
+    }
+  },
+  "task_scope": "controls",
+  "tasks": {
+    "training_bbox/760748192": {
+      "pool_id": "training_bbox",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760748192/large.jpg",
+        "image_id": "760748192",
+        "initial_boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "boxes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "message_on_unknown_solution": "Обведите бабочку и выберите «Бабочки выделены рамками».",
+      "infinite_overlap": true
+    },
+    "training_bbox/764389805": {
+      "pool_id": "training_bbox",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/764389805/large.jpg",
+        "image_id": "764389805",
+        "initial_boxes": [
+          {
+            "type": "rectangle",
+            "data": {
+              "p1": {
+                "x": 0.2,
+                "y": 0.2
+              },
+              "p2": {
+                "x": 0.6,
+                "y": 0.7
+              }
+            }
+          }
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "empty"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "message_on_unknown_solution": "Выделите лишнюю рамку и нажмите D в английской раскладке. Выберите «На фотографии нет взрослых бабочек».",
+      "infinite_overlap": true
+    },
+    "training_review/760748192": {
+      "pool_id": "training_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760748192/large.jpg",
+        "candidate_id": "760748192",
+        "boxes": [
+          [
+            0.30337078651685395,
+            0.303951367781155,
+            0.6741573033707866,
+            0.8237082066869301
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "message_on_unknown_solution": "Бабочка найдена один раз, но граница рамки смещена.",
+      "infinite_overlap": true
+    },
+    "training_review/761346816": {
+      "pool_id": "training_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761346816/large.jpg",
+        "candidate_id": "761346816",
+        "boxes": [
+          [
+            0.2822265625,
+            0.26429479034307496,
+            0.6396484375,
+            0.6327827191867852
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "no",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "message_on_unknown_solution": "Пропущена бабочка. Среди нарисованных рамок нет лишних или неточных.",
+      "infinite_overlap": true
+    },
+    "training_review/762517911": {
+      "pool_id": "training_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/762517911/large.jpg",
+        "candidate_id": "762517911",
+        "boxes": [
+          [
+            0.1416015625,
+            0.45703125,
+            0.3115234375,
+            0.7434895833333333
+          ],
+          [
+            0.2822265625,
+            0.4713541666666667,
+            0.5537109375,
+            0.7903645833333334
+          ],
+          [
+            0.46484375,
+            0.52734375,
+            0.7373046875,
+            0.875
+          ],
+          [
+            0.90625,
+            0.3111979166666667,
+            0.97265625,
+            0.5572916666666667
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "message_on_unknown_solution": "Все бабочки выделены, лишних рамок нет, границы верны.",
+      "infinite_overlap": true
+    },
+    "training_review/761015770": {
+      "pool_id": "training_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761015770/large.jpg",
+        "candidate_id": "761015770",
+        "boxes": [
+          [
+            0.1650390625,
+            0.0,
+            1.0,
+            0.9505208333333334
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "message_on_unknown_solution": "Все бабочки выделены, лишних рамок нет, границы верны.",
+      "infinite_overlap": true
+    },
+    "training_review/760884130": {
+      "pool_id": "training_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760884130/large.jpg",
+        "candidate_id": "760884130",
+        "boxes": [
+          [
+            0.2470703125,
+            0.055989583333333336,
+            0.873046875,
+            0.84375
+          ],
+          [
+            0.2333984375,
+            0.037760416666666664,
+            0.88671875,
+            0.8619791666666666
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "no",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "message_on_unknown_solution": "Одну бабочку обвели дважды. Бабочка найдена, но вторая рамка лишняя.",
+      "infinite_overlap": true
+    },
+    "training_review/764389805": {
+      "pool_id": "training_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/764389805/large.jpg",
+        "candidate_id": "764389805",
+        "boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "message_on_unknown_solution": "Взрослых бабочек нет, рамок тоже нет. На все три вопроса ответьте «Да».",
+      "infinite_overlap": true
+    },
+    "pilot_review/control_763043478": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/763043478/large.jpg",
+        "candidate_id": "control_763043478",
+        "boxes": [
+          [
+            0.208984375,
+            0.2587890625,
+            0.7841796875,
+            0.73828125
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_759277845": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/759277845/large.jpg",
+        "candidate_id": "control_759277845",
+        "boxes": [
+          [
+            0.3056640625,
+            0.1753472222222222,
+            0.619140625,
+            0.7413194444444444
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_761008477": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761008477/large.jpg",
+        "candidate_id": "control_761008477",
+        "boxes": [
+          [
+            0.25191675794085433,
+            0.1171875,
+            0.7831325301204819,
+            0.8271484375
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_761015168": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761015168/large.jpg",
+        "candidate_id": "control_761015168",
+        "boxes": [
+          [
+            0.08203125,
+            0.15175879396984926,
+            0.712890625,
+            0.8974874371859297
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_758841374": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/758841374/large.jpg",
+        "candidate_id": "control_758841374",
+        "boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "no",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_763870359": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/763870359/large.jpg",
+        "candidate_id": "control_763870359",
+        "boxes": [
+          [
+            0.0927734375,
+            0.18880208333333334,
+            0.7216796875,
+            0.8033854166666667
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_761036975": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761036975/large.jpg",
+        "candidate_id": "control_761036975",
+        "boxes": [
+          [
+            0.419921875,
+            0.40234375,
+            0.5693359375,
+            0.6354166666666666
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_762688864": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/762688864/large.jpg",
+        "candidate_id": "control_762688864",
+        "boxes": [
+          [
+            0.4208984375,
+            0.4283854166666667,
+            0.59375,
+            0.6223958333333334
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_758358605": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/758358605/large.jpg",
+        "candidate_id": "control_758358605",
+        "boxes": [
+          [
+            0.107421875,
+            0.133032694475761,
+            0.8642578125,
+            0.80608793686584
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_761836698": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761836698/large.jpg",
+        "candidate_id": "control_761836698",
+        "boxes": [
+          [
+            0.11523687580025609,
+            0.1708984375,
+            0.7554417413572343,
+            0.5322265625
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_762719232": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/762719232/large.jpg",
+        "candidate_id": "control_762719232",
+        "boxes": [
+          [
+            0.0595703125,
+            0.046251993620414676,
+            0.912109375,
+            0.9505582137161084
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_760225098": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760225098/large.jpg",
+        "candidate_id": "control_760225098",
+        "boxes": [
+          [
+            0.15234375,
+            0.23325062034739455,
+            0.787109375,
+            0.7977667493796526
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_759629344": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/759629344/large.jpg",
+        "candidate_id": "control_759629344",
+        "boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "no",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_760219697": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760219697/large.jpg",
+        "candidate_id": "control_760219697",
+        "boxes": [
+          [
+            0.13687436159346272,
+            0.23516483516483516,
+            0.8335035750766089,
+            0.7307692307692308
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_760884062": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760884062/large.jpg",
+        "candidate_id": "control_760884062",
+        "boxes": [
+          [
+            0.234375,
+            0.0859375,
+            0.7412109375,
+            0.8072916666666666
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_760883580": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760883580/large.jpg",
+        "candidate_id": "control_760883580",
+        "boxes": [
+          [
+            0.048828125,
+            0.2109375,
+            0.9599609375,
+            0.8736979166666666
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_760619774": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760619774/large.jpg",
+        "candidate_id": "control_760619774",
+        "boxes": [
+          [
+            0.134765625,
+            0.20833333333333334,
+            0.7421875,
+            0.8684895833333334
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "pilot_review/control_762200677": {
+      "pool_id": "pilot_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/762200677/large.jpg",
+        "candidate_id": "control_762200677",
+        "boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "exam_review/761832174": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761832174/large.jpg",
+        "candidate_id": "761832174",
+        "boxes": [
+          [
+            0.11326860841423948,
+            0.1650390625,
+            0.7055016181229773,
+            0.646484375
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "no",
+            "complete": "yes",
+            "no_extra": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "exam_review/760883609": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760883609/large.jpg",
+        "candidate_id": "760883609",
+        "boxes": [
+          [
+            0.16796875,
+            0.10677083333333333,
+            0.876953125,
+            0.87890625
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "yes",
+            "complete": "yes",
+            "no_extra": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "exam_review/758338104": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/758338104/large.jpg",
+        "candidate_id": "758338104",
+        "boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "yes",
+            "complete": "no",
+            "no_extra": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "exam_review/763914396": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/763914396/large.jpg",
+        "candidate_id": "763914396",
+        "boxes": [
+          [
+            0.2822265625,
+            0.21875,
+            0.732421875,
+            0.7018229166666667
+          ],
+          [
+            0.2783203125,
+            0.21614583333333334,
+            0.73828125,
+            0.7083333333333334
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "yes",
+            "complete": "yes",
+            "no_extra": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "exam_review/764386594": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/764386594/large.jpg",
+        "candidate_id": "764386594",
+        "boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "yes",
+            "complete": "yes",
+            "no_extra": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "exam_review/763402375": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/763402375/large.jpg",
+        "candidate_id": "763402375",
+        "boxes": [
+          [
+            0.2197265625,
+            0.30791788856304986,
+            0.638671875,
+            0.7917888563049853
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "no",
+            "complete": "yes",
+            "no_extra": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "exam_review/762517553": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/762517553/large.jpg",
+        "candidate_id": "762517553",
+        "boxes": [
+          [
+            0.4765625,
+            0.18489583333333334,
+            0.6533203125,
+            0.45182291666666663
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "yes",
+            "complete": "yes",
+            "no_extra": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "exam_review/761352424": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761352424/large.jpg",
+        "candidate_id": "761352424",
+        "boxes": [
+          [
+            0.287109375,
+            0.25271739130434784,
+            0.6708984375,
+            0.5774456521739131
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "no",
+            "complete": "yes",
+            "no_extra": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "exam_review/763753993": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/763753993/large.jpg",
+        "candidate_id": "763753993",
+        "boxes": [
+          [
+            0.13671875,
+            0.21320973348783315,
+            0.7919921875,
+            0.8505214368482039
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "yes",
+            "complete": "yes",
+            "no_extra": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "exam_review/763992771": {
+      "pool_id": "exam_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/763992771/large.jpg",
+        "candidate_id": "763992771",
+        "boxes": [
+          [
+            0.37890625,
+            0.26495726495726496,
+            0.8115234375,
+            0.647130647130647
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "accurate": "no",
+            "complete": "yes",
+            "no_extra": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "overlap": 33,
+      "infinite_overlap": false
+    },
+    "main_review/control_762719232": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/762719232/large.jpg",
+        "candidate_id": "control_762719232",
+        "boxes": [
+          [
+            0.0595703125,
+            0.046251993620414676,
+            0.912109375,
+            0.9505582137161084
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_760225098": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760225098/large.jpg",
+        "candidate_id": "control_760225098",
+        "boxes": [
+          [
+            0.15234375,
+            0.23325062034739455,
+            0.787109375,
+            0.7977667493796526
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_759629344": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/759629344/large.jpg",
+        "candidate_id": "control_759629344",
+        "boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "no",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_760219697": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760219697/large.jpg",
+        "candidate_id": "control_760219697",
+        "boxes": [
+          [
+            0.13687436159346272,
+            0.23516483516483516,
+            0.8335035750766089,
+            0.7307692307692308
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_760884062": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760884062/large.jpg",
+        "candidate_id": "control_760884062",
+        "boxes": [
+          [
+            0.234375,
+            0.0859375,
+            0.7412109375,
+            0.8072916666666666
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_760883580": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760883580/large.jpg",
+        "candidate_id": "control_760883580",
+        "boxes": [
+          [
+            0.048828125,
+            0.2109375,
+            0.9599609375,
+            0.8736979166666666
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_760619774": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760619774/large.jpg",
+        "candidate_id": "control_760619774",
+        "boxes": [
+          [
+            0.134765625,
+            0.20833333333333334,
+            0.7421875,
+            0.8684895833333334
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_762200677": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/762200677/large.jpg",
+        "candidate_id": "control_762200677",
+        "boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_763043478": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/763043478/large.jpg",
+        "candidate_id": "control_763043478",
+        "boxes": [
+          [
+            0.208984375,
+            0.2587890625,
+            0.7841796875,
+            0.73828125
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_759277845": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/759277845/large.jpg",
+        "candidate_id": "control_759277845",
+        "boxes": [
+          [
+            0.3056640625,
+            0.1753472222222222,
+            0.619140625,
+            0.7413194444444444
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_761008477": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761008477/large.jpg",
+        "candidate_id": "control_761008477",
+        "boxes": [
+          [
+            0.25191675794085433,
+            0.1171875,
+            0.7831325301204819,
+            0.8271484375
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_761015168": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761015168/large.jpg",
+        "candidate_id": "control_761015168",
+        "boxes": [
+          [
+            0.08203125,
+            0.15175879396984926,
+            0.712890625,
+            0.8974874371859297
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_758841374": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/758841374/large.jpg",
+        "candidate_id": "control_758841374",
+        "boxes": []
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "no",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_763870359": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/763870359/large.jpg",
+        "candidate_id": "control_763870359",
+        "boxes": [
+          [
+            0.0927734375,
+            0.18880208333333334,
+            0.7216796875,
+            0.8033854166666667
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_761036975": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761036975/large.jpg",
+        "candidate_id": "control_761036975",
+        "boxes": [
+          [
+            0.419921875,
+            0.40234375,
+            0.5693359375,
+            0.6354166666666666
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_762688864": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/762688864/large.jpg",
+        "candidate_id": "control_762688864",
+        "boxes": [
+          [
+            0.4208984375,
+            0.4283854166666667,
+            0.59375,
+            0.6223958333333334
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_758358605": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/758358605/large.jpg",
+        "candidate_id": "control_758358605",
+        "boxes": [
+          [
+            0.107421875,
+            0.133032694475761,
+            0.8642578125,
+            0.80608793686584
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "yes"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    },
+    "main_review/control_761836698": {
+      "pool_id": "main_review",
+      "input_values": {
+        "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761836698/large.jpg",
+        "candidate_id": "control_761836698",
+        "boxes": [
+          [
+            0.11523687580025609,
+            0.1708984375,
+            0.7554417413572343,
+            0.5322265625
+          ]
+        ]
+      },
+      "known_solutions": [
+        {
+          "output_values": {
+            "status": "reviewed",
+            "complete": "yes",
+            "no_extra": "yes",
+            "accurate": "no"
+          },
+          "correctness_weight": 1.0
+        }
+      ],
+      "infinite_overlap": true
+    }
+  }
+}

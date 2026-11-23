@@ -1,0 +1,98 @@
+[
+  {
+    "pool_id": "6871201",
+    "input_values": {
+      "image_id": "760884046",
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760884046/large.jpg",
+      "initial_boxes": []
+    },
+    "overlap": 1,
+    "unavailable_for": [
+      "94423dc50a3faec65c0ab0a46c44f235"
+    ]
+  },
+  {
+    "pool_id": "6871201",
+    "input_values": {
+      "image_id": "761016219",
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761016219/large.jpg",
+      "initial_boxes": []
+    },
+    "overlap": 1,
+    "unavailable_for": [
+      "94423dc50a3faec65c0ab0a46c44f235"
+    ]
+  },
+  {
+    "pool_id": "6871201",
+    "input_values": {
+      "image_id": "761037722",
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761037722/large.jpg",
+      "initial_boxes": []
+    },
+    "overlap": 1,
+    "unavailable_for": [
+      "94423dc50a3faec65c0ab0a46c44f235"
+    ]
+  },
+  {
+    "pool_id": "6871201",
+    "input_values": {
+      "image_id": "761476956",
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761476956/large.jpg",
+      "initial_boxes": []
+    },
+    "overlap": 1,
+    "unavailable_for": [
+      "94423dc50a3faec65c0ab0a46c44f235"
+    ]
+  },
+  {
+    "pool_id": "6871201",
+    "input_values": {
+      "image_id": "761484844",
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761484844/large.jpg",
+      "initial_boxes": []
+    },
+    "overlap": 1,
+    "unavailable_for": [
+      "94423dc50a3faec65c0ab0a46c44f235"
+    ]
+  },
+  {
+    "pool_id": "6871201",
+    "input_values": {
+      "image_id": "761485274",
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761485274/large.jpg",
+      "initial_boxes": []
+    },
+    "overlap": 1,
+    "unavailable_for": [
+      "94423dc50a3faec65c0ab0a46c44f235"
+    ]
+  },
+  {
+    "pool_id": "6871201",
+    "input_values": {
+      "image_id": "761486670",
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761486670/large.jpg",
+      "initial_boxes": []
+    },
+    "overlap": 1,
+    "unavailable_for": [
+      "94423dc50a3faec65c0ab0a46c44f235"
+    ]
+  },
+  {
+    "pool_id": "6871201",
+    "input_values": {
+      "image_id": "761502814",
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761502814/large.jpg",
+      "initial_boxes": []
+    },
+    "overlap": 1,
+    "unavailable_for": [
+      "94423dc50a3faec65c0ab0a46c44f235"
+    ]
+  }
+]

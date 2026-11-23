@@ -1,0 +1,38 @@
+[
+  {
+    "file": "responses/pilot/bbox.json",
+    "source": "runs/butterflies/pilot/bbox/raw.json",
+    "saved_utc": "2026-11-18T18:14:27.658453+00:00",
+    "assignments": 20
+  },
+  {
+    "file": "responses/pilot/review.json",
+    "source": "runs/butterflies/pilot/review/raw.json",
+    "saved_utc": "2026-11-18T19:07:45.647642+00:00",
+    "assignments": 10
+  },
+  {
+    "file": "responses/main/bbox.json",
+    "source": "runs/butterflies/main/review-flow/bbox/raw.json",
+    "saved_utc": "2026-11-19T04:11:16.670005+00:00",
+    "assignments": 384
+  },
+  {
+    "file": "responses/main/retry.json",
+    "source": "runs/butterflies/main/review-flow/retry/raw.json",
+    "saved_utc": "2026-11-19T04:11:17.136611+00:00",
+    "assignments": 151
+  },
+  {
+    "file": "responses/main/third.json",
+    "source": "runs/butterflies/main/review-flow/third/raw.json",
+    "saved_utc": "2026-11-19T04:11:17.583578+00:00",
+    "assignments": 128
+  },
+  {
+    "file": "responses/main/review.json",
+    "source": "runs/butterflies/main/review-flow/review/raw.json",
+    "saved_utc": "2026-11-19T04:11:18.519693+00:00",
+    "assignments": 204
+  }
+]

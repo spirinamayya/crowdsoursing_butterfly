@@ -1,0 +1,23 @@
+{
+  "pilot_size": 20,
+  "seed": 2026,
+  "bbox": {
+    "reward": 1,
+    "overlap": 1,
+    "page_size": 1
+  },
+  "review": {
+    "reward": 2,
+    "overlap": 3,
+    "page_size": 10
+  },
+  "training": {
+    "pass_percent": 80
+  },
+  "exam": {
+    "reward": 3,
+    "participants": 10,
+    "pass_percent": 80,
+    "bbox_iou": 0.5
+  }
+}

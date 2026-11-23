@@ -1,0 +1,421 @@
+{
+  "000068d6cf--6afe330efbab195e3de3c0e0": {
+    "expires": "2026-11-25T23:47:50",
+    "assignments": [
+      "000068d6cf--6afe32ef7760fd2ec70d2c9f",
+      "000068d6cf--6afe32f97760fd2ec70d2dd5",
+      "000068d6cf--6afe330efbab195e3de3c0e0"
+    ],
+    "done": true
+  },
+  "000068d6cf--6afe32217760fd2ec70d199c": {
+    "expires": "2026-11-25T23:50:27",
+    "assignments": [
+      "000068d6cf--6afe321b22cbfd199645ba8f",
+      "000068d6cf--6afe321f9a3ccf124f31d5e3",
+      "000068d6cf--6afe32217760fd2ec70d199c"
+    ],
+    "reason": "Три отметки «фото не загрузилось» подряд",
+    "done": true
+  },
+  "000068d6cf--6afe324a9a3ccf124f31d9bc": {
+    "expires": "2026-11-25T23:50:27",
+    "assignments": [
+      "000068d6cf--6afe32460a354570f1b4608c",
+      "000068d6cf--6afe3248637bb638669c3daa",
+      "000068d6cf--6afe324a9a3ccf124f31d9bc"
+    ],
+    "reason": "Три отметки «фото не загрузилось» подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3257fbab195e3de3b1ad": {
+    "expires": "2026-11-25T23:50:27",
+    "assignments": [
+      "000068d6cf--6afe325393859475ce7ee73d",
+      "000068d6cf--6afe325593859475ce7ee766",
+      "000068d6cf--6afe3257fbab195e3de3b1ad"
+    ],
+    "reason": "Три отметки «фото не загрузилось» подряд",
+    "done": true
+  },
+  "000068d6cf--6afe32630a354570f1b46334": {
+    "expires": "2026-11-25T23:50:27",
+    "assignments": [
+      "000068d6cf--6afe325e637bb638669c4097",
+      "000068d6cf--6afe32600a354570f1b462c0",
+      "000068d6cf--6afe32630a354570f1b46334"
+    ],
+    "reason": "Три отметки «фото не загрузилось» подряд",
+    "done": true
+  },
+  "000068d6cf--6afe367313c5a15cfd51b620": {
+    "expires": "2026-11-26T00:03:51",
+    "assignments": [
+      "000068d6cf--6afe3368b97a6340c75b12fa",
+      "000068d6cf--6afe36689a3ccf124f324528",
+      "000068d6cf--6afe367313c5a15cfd51b620"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3721ef0654541c927942": {
+    "expires": "2026-11-26T00:03:51",
+    "assignments": [
+      "000068d6cf--6afe3710637bb638669cc7fa",
+      "000068d6cf--6afe371793859475ce7f6d5c",
+      "000068d6cf--6afe3721ef0654541c927942"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3770a6287e79d3d89414": {
+    "expires": "2026-11-26T00:03:51",
+    "assignments": [
+      "000068d6cf--6afe375b7760fd2ec70da37c",
+      "000068d6cf--6afe3763a6287e79d3d89217",
+      "000068d6cf--6afe3770a6287e79d3d89414"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe37f3a6287e79d3d8a139": {
+    "expires": "2026-11-26T00:03:51",
+    "assignments": [
+      "000068d6cf--6afe37e0fbab195e3de44aac",
+      "000068d6cf--6afe37e60a354570f1b52892",
+      "000068d6cf--6afe37f3a6287e79d3d8a139"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3612b97a6340c75b572a": {
+    "expires": "2026-11-26T00:03:51",
+    "assignments": [
+      "000068d6cf--6afe35d493859475ce7f4937",
+      "000068d6cf--6afe35fe637bb638669ca11e",
+      "000068d6cf--6afe3612b97a6340c75b572a"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe36da93859475ce7f62e1": {
+    "expires": "2026-11-26T00:03:51",
+    "assignments": [
+      "000068d6cf--6afe364213c5a15cfd51b181",
+      "000068d6cf--6afe36cc0a354570f1b50116",
+      "000068d6cf--6afe36da93859475ce7f62e1"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3a61fbab195e3de4744a": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3846d4140f4279074f3f",
+      "000068d6cf--6afe3a56a6287e79d3d8c481",
+      "000068d6cf--6afe3a61fbab195e3de4744a"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3aef22cbfd199646821d": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3acbb97a6340c75bf5e0",
+      "000068d6cf--6afe3ad622cbfd1996467fd7",
+      "000068d6cf--6afe3aef22cbfd199646821d"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3b76b97a6340c75bff3d": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3b5213c5a15cfd521843",
+      "000068d6cf--6afe3b62fbab195e3de486c7",
+      "000068d6cf--6afe3b76b97a6340c75bff3d"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3bec9a3ccf124f32c64e": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3bb6ef0654541c92c8a2",
+      "000068d6cf--6afe3bd7a6287e79d3d8e12b",
+      "000068d6cf--6afe3bec9a3ccf124f32c64e"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3bb3ef0654541c92c81f": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3b8413c5a15cfd521bb1",
+      "000068d6cf--6afe3ba2fbab195e3de48ba9",
+      "000068d6cf--6afe3bb3ef0654541c92c81f"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3c34637bb638669d26ea": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3c16a6287e79d3d8e4d2",
+      "000068d6cf--6afe3c220a354570f1b579b8",
+      "000068d6cf--6afe3c34637bb638669d26ea"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3c23b97a6340c75c0926": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3c0313c5a15cfd52230a",
+      "000068d6cf--6afe3c13ef0654541c92ce61",
+      "000068d6cf--6afe3c23b97a6340c75c0926"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3b7fd4140f4279078065": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3b5f637bb638669d1a95",
+      "000068d6cf--6afe3b6f0a354570f1b565e9",
+      "000068d6cf--6afe3b7fd4140f4279078065"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3bf9637bb638669d234e": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3b98ef0654541c92c6d5",
+      "000068d6cf--6afe3baf0a354570f1b56af1",
+      "000068d6cf--6afe3bf9637bb638669d234e"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3bf693859475ce7ff539": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3bd8d4140f427907957b",
+      "000068d6cf--6afe3bef637bb638669d22e6",
+      "000068d6cf--6afe3bf693859475ce7ff539"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3ca3a6287e79d3d8f6e4": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3c64b97a6340c75c0e74",
+      "000068d6cf--6afe3c94d4140f427907a283",
+      "000068d6cf--6afe3ca3a6287e79d3d8f6e4"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3d18ef0654541c92dde8": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3ce47760fd2ec70e27a6",
+      "000068d6cf--6afe3cf77760fd2ec70e2874",
+      "000068d6cf--6afe3d18ef0654541c92dde8"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6cf--6afe3d45ef0654541c92e010": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6cf--6afe3d33fbab195e3de4a926",
+      "000068d6cf--6afe3d3c93859475ce80195a",
+      "000068d6cf--6afe3d45ef0654541c92e010"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe419bb97a6340c75c7f8e": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6d1--6afe419322cbfd199646def2",
+      "000068d6d1--6afe4197ef0654541c933cea",
+      "000068d6d1--6afe419bb97a6340c75c7f8e"
+    ],
+    "reason": "Три ответа подряд быстрее 5 секунд",
+    "done": true
+  },
+  "000068d6d1--6afe41c9637bb638669d9610": {
+    "expires": "2026-11-26T01:16:47",
+    "assignments": [
+      "000068d6d1--6afe41c29a3ccf124f333274",
+      "000068d6d1--6afe41c722cbfd199646e214",
+      "000068d6d1--6afe41c9637bb638669d9610"
+    ],
+    "reason": "Три ответа подряд быстрее 5 секунд",
+    "done": true
+  },
+  "000068d6cf--6afe3c33a6287e79d3d8ee7d": {
+    "expires": "2026-11-26T01:58:35",
+    "assignments": [
+      "000068d6cf--6afe3c1413c5a15cfd5223a7",
+      "000068d6cf--6afe3c2693859475ce7ff987",
+      "000068d6cf--6afe3c33a6287e79d3d8ee7d"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe40f0a6287e79d3d9457b": {
+    "expires": "2026-11-26T01:58:35",
+    "assignments": [
+      "000068d6d1--6afe40d7ef0654541c932ea4",
+      "000068d6d1--6afe40dba6287e79d3d94471",
+      "000068d6d1--6afe40f0a6287e79d3d9457b"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe417dd4140f427907eef2": {
+    "expires": "2026-11-26T01:58:35",
+    "assignments": [
+      "000068d6d1--6afe4165fbab195e3de523a1",
+      "000068d6d1--6afe417013c5a15cfd52816d",
+      "000068d6d1--6afe417dd4140f427907eef2"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe413a0a354570f1b603c6": {
+    "expires": "2026-11-26T01:58:35",
+    "assignments": [
+      "000068d6d1--6afe412eb97a6340c75c7687",
+      "000068d6d1--6afe4134fbab195e3de51fa0",
+      "000068d6d1--6afe413a0a354570f1b603c6"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe417fef0654541c933b2e": {
+    "expires": "2026-11-26T01:58:35",
+    "assignments": [
+      "000068d6d1--6afe4172637bb638669d8fc6",
+      "000068d6d1--6afe417893859475ce809234",
+      "000068d6d1--6afe417fef0654541c933b2e"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe41b70a354570f1b60990": {
+    "expires": "2026-11-26T01:58:35",
+    "assignments": [
+      "000068d6d1--6afe41ab93859475ce8094dd",
+      "000068d6d1--6afe41b2ef0654541c933e56",
+      "000068d6d1--6afe41b70a354570f1b60990"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe41ccb97a6340c75c8200": {
+    "expires": "2026-11-26T01:58:35",
+    "assignments": [
+      "000068d6d1--6afe41c722cbfd199646e214",
+      "000068d6d1--6afe41c9637bb638669d9610",
+      "000068d6d1--6afe41ccb97a6340c75c8200"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe41d5d4140f427907f577": {
+    "expires": "2026-11-26T01:58:35",
+    "assignments": [
+      "000068d6d1--6afe41d1ef0654541c93405a",
+      "000068d6d1--6afe41d3fbab195e3de52ab5",
+      "000068d6d1--6afe41d5d4140f427907f577"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe4f67d4140f427908d069": {
+    "expires": "2026-11-26T01:58:35",
+    "assignments": [
+      "000068d6d1--6afe4f2aef0654541c940d9f",
+      "000068d6d1--6afe4f50ef0654541c941039",
+      "000068d6d1--6afe4f67d4140f427908d069"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe40d29a3ccf124f332002": {
+    "expires": "2026-11-26T02:07:21",
+    "assignments": [
+      "000068d6cf--6afe3c3fd4140f4279079b9c",
+      "000068d6d1--6afe40cb22cbfd199646d086",
+      "000068d6d1--6afe40d29a3ccf124f332002"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe4170d4140f427907ed21": {
+    "expires": "2026-11-26T02:07:21",
+    "assignments": [
+      "000068d6d1--6afe411f7760fd2ec70eb1b5",
+      "000068d6d1--6afe41617760fd2ec70ec42a",
+      "000068d6d1--6afe4170d4140f427907ed21"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe414fd4140f427907eb26": {
+    "expires": "2026-11-26T02:35:39",
+    "assignments": [
+      "000068d6d1--6afe412eb97a6340c75c7675",
+      "000068d6d1--6afe41437760fd2ec70eb47d",
+      "000068d6d1--6afe414fd4140f427907eb26"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe4fc2637bb638669e65f8": {
+    "expires": "2026-11-26T02:35:39",
+    "assignments": [
+      "000068d6d1--6afe4fa1fbab195e3de69451",
+      "000068d6d1--6afe4fb20a354570f1b6e7c1",
+      "000068d6d1--6afe4fc2637bb638669e65f8"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe416c22cbfd199646dc16": {
+    "expires": "2026-11-26T02:45:37",
+    "assignments": [
+      "000068d6d1--6afe4160b97a6340c75c7b3c",
+      "000068d6d1--6afe4165a6287e79d3d94ebd",
+      "000068d6d1--6afe416c22cbfd199646dc16"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe5038ef0654541c941ed5": {
+    "expires": "2026-11-26T02:45:37",
+    "assignments": [
+      "000068d6d1--6afe500a22cbfd199647d443",
+      "000068d6d1--6afe501cef0654541c941cf9",
+      "000068d6d1--6afe5038ef0654541c941ed5"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  },
+  "000068d6d1--6afe5039637bb638669e6bf6": {
+    "expires": "2026-11-26T02:45:37",
+    "assignments": [
+      "000068d6d1--6afe501693859475ce8191a0",
+      "000068d6d1--6afe502413c5a15cfd538673",
+      "000068d6d1--6afe5039637bb638669e6bf6"
+    ],
+    "reason": "Три отклонения подряд",
+    "done": true
+  }
+}

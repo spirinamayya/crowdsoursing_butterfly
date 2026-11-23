@@ -1,0 +1,181 @@
+[
+  {
+    "input_values": {
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760748192/large.jpg",
+      "candidate_id": "760748192",
+      "boxes": [
+        [
+          0.30337078651685395,
+          0.303951367781155,
+          0.6741573033707866,
+          0.8237082066869301
+        ]
+      ]
+    },
+    "known_solutions": [
+      {
+        "output_values": {
+          "status": "reviewed",
+          "complete": "yes",
+          "no_extra": "yes",
+          "accurate": "no"
+        },
+        "correctness_weight": 1
+      }
+    ],
+    "message_on_unknown_solution": "Бабочка найдена один раз, но граница рамки смещена.",
+    "infinite_overlap": true
+  },
+  {
+    "input_values": {
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761346816/large.jpg",
+      "candidate_id": "761346816",
+      "boxes": [
+        [
+          0.2822265625,
+          0.26429479034307496,
+          0.6396484375,
+          0.6327827191867852
+        ]
+      ]
+    },
+    "known_solutions": [
+      {
+        "output_values": {
+          "status": "reviewed",
+          "complete": "no",
+          "no_extra": "yes",
+          "accurate": "yes"
+        },
+        "correctness_weight": 1
+      }
+    ],
+    "message_on_unknown_solution": "Пропущена бабочка. Среди нарисованных рамок нет лишних или неточных.",
+    "infinite_overlap": true
+  },
+  {
+    "input_values": {
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/762517911/large.jpg",
+      "candidate_id": "762517911",
+      "boxes": [
+        [
+          0.1416015625,
+          0.45703125,
+          0.3115234375,
+          0.7434895833333333
+        ],
+        [
+          0.2822265625,
+          0.4713541666666667,
+          0.5537109375,
+          0.7903645833333334
+        ],
+        [
+          0.46484375,
+          0.52734375,
+          0.7373046875,
+          0.875
+        ],
+        [
+          0.90625,
+          0.3111979166666667,
+          0.97265625,
+          0.5572916666666667
+        ]
+      ]
+    },
+    "known_solutions": [
+      {
+        "output_values": {
+          "status": "reviewed",
+          "complete": "yes",
+          "no_extra": "yes",
+          "accurate": "yes"
+        },
+        "correctness_weight": 1
+      }
+    ],
+    "message_on_unknown_solution": "Все бабочки выделены, лишних рамок нет, границы верны.",
+    "infinite_overlap": true
+  },
+  {
+    "input_values": {
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/761015770/large.jpg",
+      "candidate_id": "761015770",
+      "boxes": [
+        [
+          0.1650390625,
+          0.0,
+          1.0,
+          0.9505208333333334
+        ]
+      ]
+    },
+    "known_solutions": [
+      {
+        "output_values": {
+          "status": "reviewed",
+          "complete": "yes",
+          "no_extra": "yes",
+          "accurate": "yes"
+        },
+        "correctness_weight": 1
+      }
+    ],
+    "message_on_unknown_solution": "Все бабочки выделены, лишних рамок нет, границы верны.",
+    "infinite_overlap": true
+  },
+  {
+    "input_values": {
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760884130/large.jpg",
+      "candidate_id": "760884130",
+      "boxes": [
+        [
+          0.2470703125,
+          0.055989583333333336,
+          0.873046875,
+          0.84375
+        ],
+        [
+          0.2333984375,
+          0.037760416666666664,
+          0.88671875,
+          0.8619791666666666
+        ]
+      ]
+    },
+    "known_solutions": [
+      {
+        "output_values": {
+          "status": "reviewed",
+          "complete": "yes",
+          "no_extra": "no",
+          "accurate": "yes"
+        },
+        "correctness_weight": 1
+      }
+    ],
+    "message_on_unknown_solution": "Одну бабочку обвели дважды. Бабочка найдена, но вторая рамка лишняя.",
+    "infinite_overlap": true
+  },
+  {
+    "input_values": {
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/764389805/large.jpg",
+      "candidate_id": "764389805",
+      "boxes": []
+    },
+    "known_solutions": [
+      {
+        "output_values": {
+          "status": "reviewed",
+          "complete": "yes",
+          "no_extra": "yes",
+          "accurate": "yes"
+        },
+        "correctness_weight": 1
+      }
+    ],
+    "message_on_unknown_solution": "Взрослых бабочек нет, рамок тоже нет. На все три вопроса ответьте «Да».",
+    "infinite_overlap": true
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "project_id": "11925",
+  "private_name": "butterfly-training-review",
+  "may_contain_adult_content": false,
+  "assignment_max_duration_seconds": 1800,
+  "training_tasks_in_task_suite_count": 6,
+  "task_suites_required_to_pass": 1,
+  "mix_tasks_in_creation_order": true,
+  "shuffle_tasks_in_task_suite": false,
+  "inherited_instructions": true
+}

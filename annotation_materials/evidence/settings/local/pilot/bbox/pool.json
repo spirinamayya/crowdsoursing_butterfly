@@ -1,0 +1,40 @@
+{
+  "project_id": "11924",
+  "private_name": "butterfly-pilot-bbox",
+  "may_contain_adult_content": false,
+  "filter": {
+    "and": [
+      {
+        "category": "computed",
+        "key": "client_type",
+        "operator": "EQ",
+        "value": "BROWSER"
+      },
+      {
+        "category": "skill",
+        "key": "21769",
+        "operator": "GTE",
+        "value": 80
+      }
+    ]
+  },
+  "reward_per_assignment": 1,
+  "assignment_max_duration_seconds": 1800,
+  "defaults": {
+    "default_overlap_for_new_task_suites": 1
+  },
+  "auto_accept_solutions": true,
+  "mixer_config": {
+    "real_tasks_count": 1,
+    "golden_tasks_count": 0,
+    "training_tasks_count": 0,
+    "force_last_assignment": true
+  },
+  "will_expire": "2026-12-18T16:50:06Z",
+  "quality_control": {
+    "training_requirement": {
+      "training_pool_id": "6870175",
+      "training_passing_skill_value": 0
+    }
+  }
+}

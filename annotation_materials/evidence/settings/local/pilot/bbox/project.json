@@ -1,0 +1,58 @@
+{
+  "public_name": "Выделите взрослых бабочек",
+  "public_description": "Выделите взрослых бабочек на фотографии.",
+  "public_instructions": "<!DOCTYPE html>\n<html lang=\"ru\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Инструкция для исполнителей</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            font-size: 16px;\n            line-height: 1.5;\n            max-width: 900px;\n            margin: 24px auto;\n            padding: 0 16px;\n        }\n\n        .sample {\n            position: relative;\n            width: min(100%, 600px);\n        }\n\n        .sample img {\n            display: block;\n            width: 100%;\n            height: auto;\n        }\n\n        .sample .box {\n            position: absolute;\n            border: 3px solid #e53935;\n            box-sizing: border-box;\n            pointer-events: none;\n        }\n\n        figcaption {\n            max-width: 600px;\n            color: #444;\n            margin-top: 8px;\n        }\n\n        .note {\n            background: #f3f5f7;\n            padding: 12px 16px;\n            border-radius: 6px;\n        }\n    </style>\n</head>\n<body>\n    <h1>Инструкция</h1>\n\n    <h3>\n        Правила разметки\n    </h3>\n\n    <ul>\n        <li>Каждая бабочка выделяется отдельной рамкой, даже если несколько объектов перекрываются.</li>\n        <li>Рамка плотно охватывает видимые части объекта: крылья, тело, усики и лапки.</li>\n        <li>Если бабочка закрыта другим объектом или обрезана краем фотографии, выделяется её видимая часть. Скрытые части не достраиваются.</li>\n        <li>Другие насекомые, гусеницы, куколки и тени не размечаются.</li>\n        <li>Дневные и ночные бабочки (в том числе моли и мотыльки) считаются корректными бабочками и размечаются.</li>\n        <li>Ошибка загрузки изображения не считается отсутствием бабочки.</li>\n    </ul>\n    <p>После просмотра выберите «Бабочки выделены рамками» или «На фотографии нет взрослых бабочек». Если изображение не открылось, выберите «Фотография не загрузилась».</p>\n\n    <h3>\n        Примеры разметки\n    </h3>\n\n    <style>\n        .sample {\n            position: relative;\n            width: min(100%, 600px);\n        }\n\n        .sample img {\n            display: block;\n            width: 100%;\n            height: auto;\n        }\n\n        .sample .box {\n            position: absolute;\n            border: 3px solid #e53935;\n            box-sizing: border-box;\n        }\n    </style>\n\n    <figure>\n        <div class=\"sample\">\n            <img\n                src=\"https://inaturalist-open-data.s3.amazonaws.com/photos/760748192/large.jpg\"\n                alt=\"Бабочка с эталонной рамкой\"\n            >\n            <span class=\"box\" style=\"\n                left: 30.34%;\n                top: 30.40%;\n                width: 45.51%;\n                height: 51.98%;\n            \"></span>\n        </div>\n        <figcaption>Одна бабочка: рамка охватывает видимые части.</figcaption>\n    </figure>\n\n    <figure>\n        <div class=\"sample\">\n            <img\n                src=\"https://inaturalist-open-data.s3.amazonaws.com/photos/762517911/large.jpg\"\n                alt=\"Четыре бабочки с эталонными рамками\"\n            >\n            <span class=\"box\" style=\"left: 14.16%; top: 45.70%; width: 16.99%; height: 28.65%;\"></span>\n            <span class=\"box\" style=\"left: 28.22%; top: 47.14%; width: 27.15%; height: 31.90%;\"></span>\n            <span class=\"box\" style=\"left: 46.48%; top: 52.73%; width: 27.25%; height: 34.77%;\"></span>\n            <span class=\"box\" style=\"left: 90.63%; top: 31.12%; width: 6.64%; height: 24.61%;\"></span>\n        </div>\n        <figcaption>Несколько бабочек: каждую размечаем отдельной рамкой.</figcaption>\n    </figure>\n\n    <figure>\n        <div class=\"sample\">\n            <img\n                src=\"https://inaturalist-open-data.s3.amazonaws.com/photos/761015770/large.jpg\"\n                alt=\"Бабочка у края кадра с эталонной рамкой\"\n            >\n            <span class=\"box\" style=\"left: 16.50%; top: 0%; width: 83.50%; height: 95.05%;\"></span>\n        </div>\n        <figcaption>Бабочка частично обрезана краем кадра: рамка охватывает видимую часть, мотылек подходит к категории бабочек.</figcaption>\n    </figure>\n\n    <h3>\n        Примеры того как делать <u>НЕ</u> надо\n    </h3>\n\n    <figure>\n        <div class=\"sample\">\n            <img\n                src=\"https://inaturalist-open-data.s3.amazonaws.com/photos/760748192/large.jpg\"\n                alt=\"Неправильная разметка: часть бабочки видна справа за рамкой\"\n            >\n            <span class=\"box\" aria-hidden=\"true\"\n                  style=\"left: 30.34%; top: 30.40%; width: 37.08%; height: 51.98%;\"></span>\n        </div>\n        <figcaption>\n            <strong>Неправильно.</strong> Рамка обрезает бабочку справа.\n            Сдвиньте правую границу так, чтобы она охватывала всю видимую часть бабочки.\n        </figcaption>\n    </figure>\n\n    <figure>\n        <div class=\"sample\">\n            <img\n                src=\"https://inaturalist-open-data.s3.amazonaws.com/photos/761346816/large.jpg\"\n                alt=\"На фото две бабочки. Рамка есть только у одной, бабочка справа пропущена.\"\n            >\n            <span class=\"box\" aria-hidden=\"true\"\n                  style=\"left: 28.22%; top: 26.43%; width: 35.74%; height: 36.85%;\"></span>\n        </div>\n        <figcaption>\n            <strong>Неправильно: пропущена вторая бабочка.</strong>\n            У правого края кадра видна ещё одна бабочка.\n        </figcaption>\n    </figure>\n\n\n</body>\n</html>\n",
+  "assignments_issuing_type": "AUTOMATED",
+  "task_spec": {
+    "input_spec": {
+      "image": {
+        "type": "url",
+        "required": true
+      },
+      "image_id": {
+        "type": "string",
+        "required": true,
+        "hidden": true
+      },
+      "initial_boxes": {
+        "type": "json",
+        "required": true,
+        "hidden": false
+      }
+    },
+    "output_spec": {
+      "status": {
+        "type": "string",
+        "required": true
+      },
+      "result": {
+        "type": "json",
+        "required": false
+      },
+      "preannotation_initialized": {
+        "type": "boolean",
+        "required": false
+      }
+    },
+    "view_spec": {
+      "type": "classic",
+      "markup": "<p>Выделите каждую взрослую бабочку отдельным прямоугольником. Чтобы удалить выделенную рамку, нажмите D в английской раскладке.</p>\n{{field type=\"image-annotation\" name=\"result\" src=image}}\n<p>Результат просмотра</p>\n{{field type=\"radio\" name=\"status\" value=\"boxes\" label=\"Бабочки выделены рамками\"}}\n{{field type=\"radio\" name=\"status\" value=\"empty\" label=\"На фотографии нет взрослых бабочек\"}}\n{{field type=\"radio\" name=\"status\" value=\"load_error\" label=\"Фотография не загрузилась\"}}\n",
+      "styles": ".image-annotation-editor__shape-polygon { display: none; }\n.image-annotation-editor__shape-rectangle { display: inline-block; }\n",
+      "script": "exports.Task = function (options) {\n    TolokaHandlebarsTask.call(this, options);\n    var boxes = this.getTask().input_values.initial_boxes;\n    if (!Array.isArray(boxes)) {\n        throw new Error(\"Вход initial_boxes должен содержать массив рамок и иметь hidden: false.\");\n    }\n    var output = this.getSolution().output_values;\n    if (!output.preannotation_initialized) {\n        if (!Array.isArray(output.result) || output.result.length === 0) {\n            this.setSolutionOutputValue(\"result\", JSON.parse(JSON.stringify(boxes)));\n        }\n        this.setSolutionOutputValue(\"preannotation_initialized\", true);\n    }\n};\nexports.Task.prototype = Object.create(TolokaHandlebarsTask.prototype);\nexports.Task.prototype.constructor = exports.Task;\nexports.Task.prototype.onRender = function () {\n    var task = this;\n    this.getField(\"result\").getEditor().on(\"shapes:update\", function (shapes) {\n        if (shapes.length === 0) {\n            task.setSolutionOutputValue(\"result\", []);\n        }\n    });\n};\n\nexports.Task.prototype.validate = function (solution) {\n    solution = solution || this.getSolution();\n    var base = TolokaHandlebarsTask.prototype.validate.call(this, solution);\n    if (base) return base;\n    var output = solution.output_values;\n    var boxes = output.result || [];\n    var message;\n    if (output.status === \"boxes\" && !boxes.length) {\n        message = \"Выделите бабочку рамкой или измените результат просмотра.\";\n    } else if (output.status !== \"boxes\" && boxes.length) {\n        message = \"Удалите рамки или выберите «Бабочки выделены рамками».\";\n    }\n    if (message) return {task_id: this.getTask().id, errors: {status: {code: \"INVALID\", message: message}}};\n    return null;\n};\n",
+      "assets": {
+        "script_urls": [
+          "$TOLOKA_ASSETS/js/toloka-handlebars-templates.js",
+          "$TOLOKA_ASSETS/js/image-annotation.js"
+        ]
+      },
+      "settings": {
+        "showSkip": true,
+        "showTimer": true,
+        "showTitle": true,
+        "showSubmit": true,
+        "showFullscreen": true,
+        "showInstructions": true
+      }
+    }
+  }
+}

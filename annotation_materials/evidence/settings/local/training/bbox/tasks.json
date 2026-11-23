@@ -1,0 +1,50 @@
+[
+  {
+    "input_values": {
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/760748192/large.jpg",
+      "image_id": "760748192",
+      "initial_boxes": []
+    },
+    "known_solutions": [
+      {
+        "output_values": {
+          "status": "boxes"
+        },
+        "correctness_weight": 1
+      }
+    ],
+    "message_on_unknown_solution": "Обведите бабочку и выберите «Бабочки выделены рамками».",
+    "infinite_overlap": true
+  },
+  {
+    "input_values": {
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/764389805/large.jpg",
+      "image_id": "764389805",
+      "initial_boxes": [
+        {
+          "type": "rectangle",
+          "data": {
+            "p1": {
+              "x": 0.2,
+              "y": 0.2
+            },
+            "p2": {
+              "x": 0.6,
+              "y": 0.7
+            }
+          }
+        }
+      ]
+    },
+    "known_solutions": [
+      {
+        "output_values": {
+          "status": "empty"
+        },
+        "correctness_weight": 1
+      }
+    ],
+    "message_on_unknown_solution": "Выделите лишнюю рамку и нажмите D в английской раскладке. Выберите «На фотографии нет взрослых бабочек».",
+    "infinite_overlap": true
+  }
+]

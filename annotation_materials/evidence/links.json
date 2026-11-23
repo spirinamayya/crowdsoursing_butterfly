@@ -1,0 +1,21 @@
+{
+  "projects": {
+    "bbox": "11924",
+    "review": "11925"
+  },
+  "pilot": {
+    "bbox": "6870148",
+    "review": "6870154"
+  },
+  "main": {
+    "bbox": "6870735",
+    "review": "6870736",
+    "retry": "6870737",
+    "third": "6871201"
+  },
+  "trainings": {
+    "bbox": "6870175",
+    "review": "6870153"
+  },
+  "exam_review": "6870156"
+}
